@@ -2,9 +2,11 @@
 
 #
 ### BEGIN INIT INFO
-# Required-Start: $local_fs
-# Default-Start: 2 3 4 5
-# Description: Hide a PCI Device from Domain0
+# Provides:         xen-pcipassthrough 
+# Required-Start:   $local_fs
+# Required-Stop:    $local_fs
+# Default-Start:    2 3 4 5
+# Description:  Hide a PCI Device from Domain0
 ### END INIT INFO
 
 check_if_loaded_or_in_kernel(){
@@ -15,6 +17,9 @@ check_if_loaded_or_in_kernel(){
 hideme(){ 
     modprobe -r e1000
     modprobe xen_pciback
+
+    # REMEMBER: there must be a config file in /etc/modprobe.d/ specifing
+    # what PCI Devices xen_pciback should hide
 }
 
 case $1 in
