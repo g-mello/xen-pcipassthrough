@@ -14,6 +14,8 @@ set -e
     modprobe xen_pciback
 
 for pcidev in $@; do
+    [ ${pcidev%%:*:*.*} != "0000" ] && pcidev=0000:${pcidev}
+
     if [ -h /sys/bus/pci/devices/"$pcidev"/driver ]; then
 
         # For PCI devices with modules attached to them
